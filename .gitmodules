@@ -1,0 +1,3 @@
+[submodule "regal"]
+	path = regal
+	url = https://github.com/chadaustin/regal
