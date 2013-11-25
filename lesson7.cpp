@@ -1,8 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
+
 #include "tgaload.h"
 
 #define MAX_NO_TEXTURES 3
@@ -46,7 +54,7 @@ void init(void)
    glBindTexture ( GL_TEXTURE_2D, texture_id [0] );
    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-   tgaLoad  ( "crate.tga", &temp_image, TGA_FREE | TGA_LOW_QUALITY );
+   tgaLoad  ( "CRATE.tga", &temp_image, TGA_FREE | TGA_LOW_QUALITY );
 
    glBindTexture ( GL_TEXTURE_2D, texture_id [1] );
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);

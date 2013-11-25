@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+g++ -Wall -Werror -o lesson7 lesson7.cpp tgaload.cpp -framework GLUT -framework OpenGL
+
+~/projects/emscripten/em++ -s LEGACY_GL_EMULATION=1 -Wall -o lesson7.html lesson7.cpp tgaload.cpp --embed-files CRATE.tga

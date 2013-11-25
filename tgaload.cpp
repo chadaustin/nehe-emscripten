@@ -20,8 +20,16 @@
    Finally exorcised all the paletted texture code...
 */
 
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -342,21 +350,3 @@ void tgaLoad ( const char *file_name, image_t *p, tgaFLAG mode )
    }
 
 }
-
-GLuint tgaLoadAndBind ( const char *file_name, tgaFLAG mode )
-{
-   GLuint   texture_id;
-   image_t  *p;
-
-   glGenTextures ( 1, &texture_id );
-   glBindTexture ( GL_TEXTURE_2D, texture_id );
-
-   if ( tgaLoadTheImage ( file_name, p, mode ))
-	{
-   	tgaUploadImage  ( p, mode );
-   	tgaFree       ( p );
-   }
-
-   return texture_id;
-}
-

@@ -47,7 +47,6 @@ typedef struct {
 
 /* 'Public' functions */
 void   tgaLoad        ( const char *file_name, image_t *p, tgaFLAG mode );
-GLuint tgaLoadAndBind ( const char *file_name, tgaFLAG mode );
 
 void tgaSetTexParams  ( unsigned int min_filter, unsigned int mag_filter, unsigned int application );
 
