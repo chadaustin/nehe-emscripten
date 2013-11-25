@@ -20,31 +20,12 @@
    Finally exorcised all the paletted texture code...
 */
 
-#include <windows.h>
-#include <GL\glu.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #include <stdio.h>
-#include <mem.h>
+#include <stdlib.h>
+#include <string.h>
 #include "tgaload.h"
-
-/* Extension Management */
-PFNGLCOMPRESSEDTEXIMAGE2DARBPROC  glCompressedTexImage2DARB  = NULL;
-PFNGLGETCOMPRESSEDTEXIMAGEARBPROC glGetCompressedTexImageARB = NULL;
-
-/* Default support - lets be optimistic! */
-bool tgaCompressedTexSupport = true;
-
-
-void tgaGetExtensions ( void )
-{  
-   glCompressedTexImage2DARB  = ( PFNGLCOMPRESSEDTEXIMAGE2DARBPROC  ) 
-                   wglGetProcAddress ( "glCompressedTexImage2DARB"  );
-   glGetCompressedTexImageARB = ( PFNGLGETCOMPRESSEDTEXIMAGEARBPROC ) 
-                   wglGetProcAddress ( "glGetCompressedTexImageARB" );
-   
-   if ( glCompressedTexImage2DARB == NULL || glGetCompressedTexImageARB == NULL )
-   	tgaCompressedTexSupport = false;
-}
-
 
 void tgaSetTexParams  ( unsigned int min_filter, unsigned int mag_filter, unsigned int application )
 {
@@ -183,18 +164,6 @@ void tgaUploadImage ( image_t *p, tgaFLAG mode )
       }
    }
 
-   /*  Let OpenGL decide what the best compressed format is each case. */   
-   if ( mode&TGA_COMPRESS && tgaCompressedTexSupport )
-   {            
-      switch ( p->info.tgaColourType )
-      {
-         case GL_RGB       : internal_format = GL_COMPRESSED_RGB_ARB; break;
-         case GL_RGBA      : internal_format = GL_COMPRESSED_RGBA_ARB; break; 
-         case GL_LUMINANCE : internal_format = GL_COMPRESSED_LUMINANCE_ARB; break; 
-         case GL_ALPHA     : internal_format = GL_COMPRESSED_ALPHA_ARB; break;          
-      }
-   }                      
-                        
    /*  Pass OpenGL Texture Image */
    if ( !( mode&TGA_NO_MIPMAPS ))
       gluBuild2DMipmaps ( GL_TEXTURE_2D, internal_format, p->info.width,
@@ -254,7 +223,7 @@ void tgaChecker ( image_t *p )
 }
 
 
-void tgaError ( char *error_string, char *file_name, FILE *file, image_t *p )
+void tgaError ( const char *error_string, const char *file_name, FILE *file, image_t *p )
 {
    printf  ( "%s - %s\n", error_string, file_name );
    tgaFree ( p );
@@ -294,11 +263,9 @@ void tgaGetImageHeader ( FILE *file, tgaHeader_t *info )
    info->bytes      = info->width * info->height * info->components;
 }
 
-int tgaLoadTheImage ( char *file_name, image_t *p, tgaFLAG mode )
+int tgaLoadTheImage ( const char *file_name, image_t *p, tgaFLAG mode )
 {
    FILE   *file;
-
-   tgaGetExtensions ( );
 
    p->data = NULL;
 
@@ -363,7 +330,7 @@ int tgaLoadTheImage ( char *file_name, image_t *p, tgaFLAG mode )
    return 1;
 }
 
-void tgaLoad ( char *file_name, image_t *p, tgaFLAG mode )
+void tgaLoad ( const char *file_name, image_t *p, tgaFLAG mode )
 {
 	if ( tgaLoadTheImage ( file_name, p, mode ))
    {
@@ -376,7 +343,7 @@ void tgaLoad ( char *file_name, image_t *p, tgaFLAG mode )
 
 }
 
-GLuint tgaLoadAndBind ( char *file_name, tgaFLAG mode )
+GLuint tgaLoadAndBind ( const char *file_name, tgaFLAG mode )
 {
    GLuint   texture_id;
    image_t  *p;

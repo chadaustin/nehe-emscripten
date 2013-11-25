@@ -1,8 +1,8 @@
-#include <windows.h>
 #include <stdio.h>
-#include <gl\gl.h>
-#include <gl\glu.h>
-#include <gl\glut.h>
+#include <stdlib.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <GLUT/glut.h>
 #include "tgaload.h"
 
 #define MAX_NO_TEXTURES 3
@@ -151,7 +151,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
       exit ( 0 );   // Exit The Program
       break;        // Ready For Next Case
     case 'f':
-      fp=TRUE;
+      fp=true;
       filter+=1;
 		if (filter>2)
 		{
@@ -159,7 +159,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
       }
     	break;
     case 'l':
-    	lp=TRUE;
+    	lp=true;
 					light=!light;
 					if (!light)
 					{
@@ -201,7 +201,7 @@ void arrow_keys ( int a_keys, int x, int y )  // Create Special Function (requir
   }
 }
 
-void main ( int argc, char** argv )   // Create Main Function For Bringing It All Together
+int main ( int argc, char** argv )   // Create Main Function For Bringing It All Together
 {
   glutInit            ( &argc, argv ); // Erm Just Write It =)
   glutInitDisplayMode ( GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA ); // Display Mode
