@@ -5,4 +5,4 @@ env.Append(
     FRAMEWORKS=['GLUT', 'OpenGL'])
 env.Program('lesson7', ['lesson7.cpp', 'tgaload.cpp'])
 
-env = Environment()
+SConscript('SConscript', variant_dir='em', duplicate=0)
