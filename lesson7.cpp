@@ -221,6 +221,10 @@ int main ( int argc, char** argv )   // Create Main Function For Bringing It All
     glutInitWindowPosition (0,0);
     glutInitWindowSize  ( 500, 500 ); // If glutFullScreen wasn't called this is the window size
     glutCreateWindow    ( "NeHe Lesson 6- Ported by Rustad" ); // Window Title (argv[0] for current directory as title)
+#ifdef EMSCRIPTEN
+    RegalMakeCurrent((RegalSystemContext)1);
+#endif
+
     init ();
     //glutFullScreen      ( );          // Put Into Full Screen
     glutDisplayFunc     ( display );  // Matching Earlier Functions To Their Counterparts
@@ -228,10 +232,6 @@ int main ( int argc, char** argv )   // Create Main Function For Bringing It All
     glutKeyboardFunc    ( keyboard );
     glutSpecialFunc     ( arrow_keys );
     glutIdleFunc			 ( display );
-
-#ifdef EMSCRIPTEN
-    RegalMakeCurrent((RegalSystemContext)1);
-#endif
 
     glutMainLoop        ( );          // Initialize The Main Loop
 }
