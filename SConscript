@@ -3,7 +3,7 @@
 env = Environment(
     EM_HOME='/Users/chad/projects/emscripten',
     CC='$EM_HOME/emcc',
-    CCFLAGS=['-O1', '-Wall'],
+    CCFLAGS=['-O1', '-Wall', '-fno-exceptions'],
     LINKFLAGS=[
         '-O1',
         '--llvm-lto', '1',
@@ -19,6 +19,16 @@ env = Environment(
 
 env.Append(
     CPPDEFINES=[
+        'REGAL_EMU_HINT=0',
+        'REGAL_EMU_BIN=0',
+        'REGAL_EMU_TEXSTO=0',
+        'REGAL_EMU_DSA=0',
+        'REGAL_EMU_PATH=0',
+        #'REGAL_EMU_IFF=0',
+        #'REGAL_EMU_SO=0',
+        #'REGAL_EMU_VAO=0',
+        #'REGAL_EMU_TEXC=0',
+    
         'REGAL_NO_TLS',
         'REGAL_NO_PNG',
         'REGAL_NO_HTTP',
